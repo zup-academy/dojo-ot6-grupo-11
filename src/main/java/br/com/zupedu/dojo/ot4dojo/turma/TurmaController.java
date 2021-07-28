@@ -24,12 +24,14 @@ public class TurmaController {
 			if (request.getDataInicio().isBefore(request.getDataFim()) ) {
 				if(!turmaRepository.existsByDataInicio(request.getDataInicio())) {
 					Turma turma = request.toModel();
+					turmaRepository.save(turma);
+					return ResponseEntity.ok().body(turma);
 				}
 			}
 		}
+		return ResponseEntity.badRequest().body(null);
 		
 		
 		
-		return ResponseEntity.created(null);
 	}
 }

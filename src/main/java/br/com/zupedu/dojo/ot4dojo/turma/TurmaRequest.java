@@ -7,6 +7,10 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 public class TurmaRequest {
 
 	@NotBlank
@@ -14,10 +18,12 @@ public class TurmaRequest {
 	private String nome;
 	
 	@NotNull
+	@JsonFormat(pattern = "dd/mm/YYYY")
 	private LocalDate dataInicio;
 	
 	@NotNull
 	@Future
+	@JsonFormat(pattern = "dd/mm/YYYY")
 	private LocalDate dataFim;
 	
 	public TurmaRequest(String nome, LocalDate dataInicio, LocalDate dataFim) {

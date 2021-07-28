@@ -29,4 +29,20 @@ public class Turma {
 		this.dataInicio = dataInicio;
 		this.dataFim = dataFim;
 	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public String getNome() {
+		return nome;
+	}
+
+	public LocalDate getDataInicio() {
+		return dataInicio;
+	}
+
+	public LocalDate getDataFim() {
+		return dataFim;
+	}
 }

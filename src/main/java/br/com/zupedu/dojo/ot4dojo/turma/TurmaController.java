@@ -10,6 +10,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.zupedu.dojo.ot4dojo.repository.TurmaRepository;
+import org.springframework.web.util.UriComponentsBuilder;
+
+import java.net.URI;
 
 @RestController
 @RequestMapping("/turmas")
@@ -19,17 +22,19 @@ public class TurmaController {
 	private TurmaRepository turmaRepository;
 	
 	@PostMapping
-	public ResponseEntity<?> inserirTurma(@RequestBody @Valid TurmaRequest request) {
+	public ResponseEntity<?> inserirTurma(UriComponentsBuilder uriComponentsBuilder, @RequestBody @Valid TurmaRequest request) {
 		if(!turmaRepository.existsByNome(request.getNome())) {
 			if (request.getDataInicio().isBefore(request.getDataFim()) ) {
 				if(!turmaRepository.existsByDataInicio(request.getDataInicio())) {
 					Turma turma = request.toModel();
 					turmaRepository.save(turma);
-					return ResponseEntity.ok().body(turma);
+
+					URI uri = uriComponentsBuilder.path("/turmas/{id}").buildAndExpand(turma.getId()).toUri();
+					return ResponseEntity.created(uri).body(new TurmaResponse(turma));
 				}
 			}
 		}
-		return ResponseEntity.badRequest().body(null);
+		return ResponseEntity.badRequest().build();
 		
 		
 		

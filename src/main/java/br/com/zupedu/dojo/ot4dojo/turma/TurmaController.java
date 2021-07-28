@@ -20,11 +20,12 @@ public class TurmaController {
 	
 	@PostMapping
 	public ResponseEntity<?> inserirTurma(@RequestBody @Valid TurmaRequest request) {
-		if(turmaRepository.existsByNome(request.getNome())) {
+		if(!turmaRepository.existsByNome(request.getNome())) {
+			if (request.getDataInicio().isBefore(request.getDataFim()) ) {
+				Turma turma = request.toModel();
+			}
 		}
-		if (request) {
-			
-		}
+		
 		return ResponseEntity.created(null);
 	}
 }

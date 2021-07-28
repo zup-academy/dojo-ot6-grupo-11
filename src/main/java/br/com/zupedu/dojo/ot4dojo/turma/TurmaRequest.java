@@ -7,6 +7,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -18,14 +19,17 @@ public class TurmaRequest {
 	private String nome;
 	
 	@NotNull
-	@JsonFormat(pattern = "dd/mm/YYYY")
 	private LocalDate dataInicio;
 	
 	@NotNull
-	@Future
-	@JsonFormat(pattern = "dd/mm/YYYY")
 	private LocalDate dataFim;
-	
+
+
+	@Deprecated
+	public TurmaRequest() {
+	}
+
+	@JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
 	public TurmaRequest(String nome, LocalDate dataInicio, LocalDate dataFim) {
 		this.nome = nome;
 		this.dataInicio = dataInicio;
@@ -47,4 +51,5 @@ public class TurmaRequest {
 	public LocalDate getDataFim() {
 		return dataFim;
 	}
+
 }

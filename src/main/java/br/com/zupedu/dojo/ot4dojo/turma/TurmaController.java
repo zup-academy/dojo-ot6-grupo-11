@@ -22,9 +22,13 @@ public class TurmaController {
 	public ResponseEntity<?> inserirTurma(@RequestBody @Valid TurmaRequest request) {
 		if(!turmaRepository.existsByNome(request.getNome())) {
 			if (request.getDataInicio().isBefore(request.getDataFim()) ) {
-				Turma turma = request.toModel();
+				if(!turmaRepository.existsByDataInicio(request.getDataInicio())) {
+					Turma turma = request.toModel();
+				}
 			}
 		}
+		
+		
 		
 		return ResponseEntity.created(null);
 	}
